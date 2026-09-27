@@ -1,0 +1,18 @@
+// Test short-circuit and / or
+attivo = false;
+
+// Non deve schiantare: il primo operando e' false, il secondo non viene toccato
+if (attivo and variabile_inesistente) {
+    print "Se leggi questo qualcosa e' andato storto";
+} else {
+    print "Short-circuit su AND: OK";
+}
+
+ok = true;
+if (ok or altra_variabile_inesistente) {
+    print "Short-circuit su OR: OK";
+}
+
+// Uscita anticipata secca
+exit;
+print "Questa riga non deve stampare mai";

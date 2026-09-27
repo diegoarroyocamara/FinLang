@@ -1,0 +1,18 @@
+// Calcolo spese mensili veloci
+stipendio = 1600.0;
+affitto = 550.0;
+cibo = 220.5;
+utenze = 90.0;
+
+uscite = affitto + cibo + utenze;
+risparmio = stipendio - uscite;
+
+print "Totale uscite mese:";
+print uscite;
+
+if (risparmio > 0.0) {
+    print "Soldi messi via:";
+    print risparmio;
+} else {
+    print "Occhio, sei a zero o in perdita!";
+}

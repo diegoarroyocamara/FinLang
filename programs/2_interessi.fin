@@ -1,0 +1,20 @@
+// Piano di risparmio con while e break
+saldo = 500.0;
+tasso = 0.04;
+target = 900.0;
+mesi = 0;
+max_mesi = 24;
+
+while (saldo < target) {
+    if (mesi == max_mesi) {
+        print "Tempo scaduto, esco dal calcolo";
+        break;
+    }
+    saldo = saldo + (saldo * tasso);
+    mesi = mesi + 1;
+}
+
+print "Mesi impiegati:";
+print mesi;
+print "Saldo raggiunto:";
+print saldo;

@@ -1,0 +1,8 @@
+// Controllo errori runtime
+quota = 100;
+persone = 0;
+
+// Divisione per zero gestita
+risultato = quota / persone;
+
+print "Questo print viene saltato";

@@ -2,8 +2,8 @@ import sys
 from FinLangVisitor import FinLangVisitor
 from memory import Environment
 
-# eccezioni per il controllo di flusso
 class BreakException(Exception): pass
+class LeaveException(Exception): pass
 class ExitException(Exception): pass
 class RuntimeError(Exception): pass
 
@@ -16,7 +16,9 @@ class Interpreter(FinLangVisitor):
             for s in ctx.statement():
                 self.visit(s)
         except ExitException:
-            pass # uscita voluta dal comando exit
+            pass
+        except LeaveException:
+            pass
         except RuntimeError as err:
             print(f"[Errore Runtime]: {err}")
 
@@ -25,6 +27,9 @@ class Interpreter(FinLangVisitor):
         try:
             for s in ctx.statement():
                 self.visit(s)
+        except LeaveException:
+            # Uscita prematura dal blocco corrente verso il blocco esterno
+            pass
         finally:
             self.memory.pop_scope()
 
@@ -61,13 +66,15 @@ class Interpreter(FinLangVisitor):
     def visitBreakStmt(self, ctx):
         raise BreakException()
 
+    def visitLeaveStmt(self, ctx):
+        raise LeaveException()
+
     def visitExitStmt(self, ctx):
         raise ExitException()
 
-    # --- logica espressioni ---
+    # --- Operatori logici Short-Circuit ---
 
     def visitAndExpr(self, ctx):
-        # short-circuit: se false, esco subito
         left = self.visit(ctx.expr(0))
         if not isinstance(left, bool):
             raise RuntimeError("Operatore 'and' solo per booleani")
@@ -79,7 +86,6 @@ class Interpreter(FinLangVisitor):
         return right
 
     def visitOrExpr(self, ctx):
-        # short-circuit: se true, esco subito
         left = self.visit(ctx.expr(0))
         if not isinstance(left, bool):
             raise RuntimeError("Operatore 'or' solo per booleani")
@@ -89,6 +95,24 @@ class Interpreter(FinLangVisitor):
         if not isinstance(right, bool):
             raise RuntimeError("Operatore 'or' solo per booleani")
         return right
+
+    # --- Operatori logici Non Short-Circuit (& e |) ---
+
+    def visitNonShortAndExpr(self, ctx):
+        # Valuta sempre entrambi i lati prima di decidere
+        left = self.visit(ctx.expr(0))
+        right = self.visit(ctx.expr(1))
+        if not isinstance(left, bool) or not isinstance(right, bool):
+            raise RuntimeError("Operatore '&' richiede entrambi gli operandi booleani")
+        return left and right
+
+    def visitNonShortOrExpr(self, ctx):
+        # Valuta sempre entrambi i lati prima di decidere
+        left = self.visit(ctx.expr(0))
+        right = self.visit(ctx.expr(1))
+        if not isinstance(left, bool) or not isinstance(right, bool):
+            raise RuntimeError("Operatore '|' richiede entrambi gli operandi booleani")
+        return left or right
 
     def visitNotExpr(self, ctx):
         val = self.visit(ctx.expr())

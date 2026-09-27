@@ -1,9 +1,7 @@
-// Test short-circuit and / or
+// 1. Test short-circuit and / or
 attivo = false;
-
-// Non deve schiantare: il primo operando e' false, il secondo non viene toccato
 if (attivo and variabile_inesistente) {
-    print "Se leggi questo qualcosa e' andato storto";
+    print "Errore and";
 } else {
     print "Short-circuit su AND: OK";
 }
@@ -13,6 +11,21 @@ if (ok or altra_variabile_inesistente) {
     print "Short-circuit su OR: OK";
 }
 
-// Uscita anticipata secca
+// 2. Test operatori non short-circuit (& e |) con operandi validi
+cond1 = true & true;
+cond2 = false | true;
+if (cond1 and cond2) {
+    print "Operatori non short-circuit (& e |): OK";
+}
+
+// 3. Test comando 'leave' (uscita dal blocco locale al blocco esterno)
+{
+    print "Entrato nel blocco locale";
+    leave;
+    print "Questa riga dentro il blocco deve essere saltata!";
+}
+print "Uscita dal blocco con leave riuscita: OK";
+
+// 4. Test comando 'exit' (terminazione immediata del programma)
 exit;
-print "Questa riga non deve stampare mai";
+print "Questa riga finale non deve essere stampata!";

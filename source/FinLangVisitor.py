@@ -14,37 +14,47 @@ class FinLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by FinLangParser#BlockStmt.
+    # Visit a parse tree produced by FinLangParser#statement.
+    def visitStatement(self, ctx:FinLangParser.StatementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by FinLangParser#blockStmt.
     def visitBlockStmt(self, ctx:FinLangParser.BlockStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by FinLangParser#IfStmt.
+    # Visit a parse tree produced by FinLangParser#ifStmt.
     def visitIfStmt(self, ctx:FinLangParser.IfStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by FinLangParser#WhileStmt.
+    # Visit a parse tree produced by FinLangParser#whileStmt.
     def visitWhileStmt(self, ctx:FinLangParser.WhileStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by FinLangParser#AssignStmt.
+    # Visit a parse tree produced by FinLangParser#assignStmt.
     def visitAssignStmt(self, ctx:FinLangParser.AssignStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by FinLangParser#PrintStmt.
+    # Visit a parse tree produced by FinLangParser#printStmt.
     def visitPrintStmt(self, ctx:FinLangParser.PrintStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by FinLangParser#BreakStmt.
+    # Visit a parse tree produced by FinLangParser#breakStmt.
     def visitBreakStmt(self, ctx:FinLangParser.BreakStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by FinLangParser#ExitStmt.
+    # Visit a parse tree produced by FinLangParser#leaveStmt.
+    def visitLeaveStmt(self, ctx:FinLangParser.LeaveStmtContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by FinLangParser#exitStmt.
     def visitExitStmt(self, ctx:FinLangParser.ExitStmtContext):
         return self.visitChildren(ctx)
 
@@ -54,13 +64,13 @@ class FinLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by FinLangParser#StringExpr.
-    def visitStringExpr(self, ctx:FinLangParser.StringExprContext):
+    # Visit a parse tree produced by FinLangParser#BoolExpr.
+    def visitBoolExpr(self, ctx:FinLangParser.BoolExprContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by FinLangParser#BoolExpr.
-    def visitBoolExpr(self, ctx:FinLangParser.BoolExprContext):
+    # Visit a parse tree produced by FinLangParser#StringExpr.
+    def visitStringExpr(self, ctx:FinLangParser.StringExprContext):
         return self.visitChildren(ctx)
 
 
@@ -71,6 +81,16 @@ class FinLangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by FinLangParser#IdExpr.
     def visitIdExpr(self, ctx:FinLangParser.IdExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by FinLangParser#NonShortAndExpr.
+    def visitNonShortAndExpr(self, ctx:FinLangParser.NonShortAndExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by FinLangParser#NonShortOrExpr.
+    def visitNonShortOrExpr(self, ctx:FinLangParser.NonShortOrExprContext):
         return self.visitChildren(ctx)
 
 
